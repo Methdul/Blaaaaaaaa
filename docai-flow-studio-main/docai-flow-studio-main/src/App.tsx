@@ -16,7 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import CreatorDashboard from "./pages/CreatorDashboard";
 import UserProfile from "./pages/UserProfile";
 import Templates from "./pages/Templates";
-import TemplateDetailPage from './pages/TemplateDetailPage'; // Import TemplateDetailPage
+import TemplateDetailPage from './pages/TemplateDetailPage';
+import BecomeCreatorPage from './pages/BecomeCreatorPage'; // Import BecomeCreatorPage
 import AiWriter from "./pages/AiWriter";
 import ResumeBuilder from "./pages/ResumeBuilder";
 import InvoiceBuilder from "./pages/InvoiceBuilder";
@@ -102,6 +103,14 @@ const App = () => (
                 }
               />
               <Route path="/templates/:templateId" element={<TemplateDetailPage />} />
+              <Route 
+                path="/become-creator"
+                element={
+                  <ProtectedRoute>
+                    <BecomeCreatorPage />
+                  </ProtectedRoute>
+                }
+              />
               
               <Route path="*" element={<NotFound />} />
             </Routes>
