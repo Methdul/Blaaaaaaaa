@@ -98,10 +98,10 @@ const Login = () => {
               </div>
               <span className="font-display font-bold text-3xl gradient-text">DocAi Login</span>
             </div>
-            <CardTitle className="text-2xl font-bold text-gray-900">
+            <CardTitle className="text-2xl font-bold text-white">
               Welcome Back!
             </CardTitle>
-            <CardDescription className="text-gray-600">
+            <CardDescription className="text-gray-200">
               Sign in to access your {userType === 'user' ? 'documents and tools' : 'creator dashboard'}.
             </CardDescription>
           </CardHeader>

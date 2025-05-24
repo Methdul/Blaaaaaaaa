@@ -1,11 +1,12 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockTemplates } from '@/data/mockTemplates';
 import { Template } from '@/types/template';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Star, StarHalf, Download, Tag, UserCircle, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea'; // Added Textarea
+import { Star, StarHalf, Download, Tag, UserCircle, ArrowLeft, AlertTriangle, MessageSquare } from 'lucide-react'; // Added MessageSquare
 import { toast } from '@/components/ui/use-toast';
 
 const TemplateDetailPage: React.FC = () => {
@@ -18,25 +19,46 @@ const TemplateDetailPage: React.FC = () => {
   // State for rating submission
   const [currentRating, setCurrentRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [submittedRating, setSubmittedRating] = useState<number | null>(null);
+  const [reviewText, setReviewText] = useState(''); // Added state for review text
+  const [submittedReview, setSubmittedReview] = useState(false); // Added state for review submission status
 
-  const renderStars = (rating: number) => {
+
+  const renderStars = (rating: number, starSize: string = "w-5 h-5") => {
     const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.4 && rating % 1 < 0.9;
+    const halfStar = rating % 1 >= 0.4 && rating % 1 < 0.9; // Keep existing half-star logic consistent
     const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-    const stars = [];
+    const starsArray = [];
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={`full-${i}`} className="w-5 h-5 text-yellow-400 fill-yellow-400" />);
+      starsArray.push(<Star key={`full-${i}`} className={`${starSize} text-yellow-400 fill-yellow-400`} />);
     }
     if (halfStar) {
-      stars.push(<StarHalf key="half" className="w-5 h-5 text-yellow-400 fill-yellow-400" />);
+      starsArray.push(<StarHalf key="half" className={`${starSize} text-yellow-400 fill-yellow-400`} />);
     }
     for (let i = 0; i < emptyStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="w-5 h-5 text-yellow-400" />);
+      starsArray.push(<Star key={`empty-${i}`} className={`${starSize} text-yellow-400`} />); // Outline only
     }
-    return stars;
+    return starsArray;
   };
+
+  const renderInteractiveStars = (starSize: string = "w-7 h-7") => {
+    return [1, 2, 3, 4, 5].map((starValue) => (
+      <Star
+        key={starValue}
+        className={`${starSize} cursor-pointer transition-colors duration-150 ease-in-out
+          ${ (hoverRating || currentRating) >= starValue 
+              ? 'text-yellow-400 fill-yellow-400' 
+              : 'text-gray-300 hover:text-yellow-300'
+          }
+          ${ currentRating >= starValue && !hoverRating && 'text-yellow-500 fill-yellow-500' }
+        `}
+        onClick={() => handleRatingClick(starValue)}
+        onMouseEnter={() => setHoverRating(starValue)}
+        onMouseLeave={() => setHoverRating(0)}
+        aria-label={`Rate ${starValue} star${starValue > 1 ? 's' : ''}`}
+      />
+    ));
+  }
 
   const handleDownload = () => {
     if (displayedTemplate) {
@@ -56,23 +78,28 @@ const TemplateDetailPage: React.FC = () => {
 
   const handleRatingClick = (ratingValue: number) => {
     setCurrentRating(ratingValue);
-    setSubmittedRating(null); // Reset submitted message if user changes rating
+    setSubmittedReview(false); // Reset submitted message if user changes rating
   };
 
-  const handleSubmitRating = () => {
-    if (currentRating > 0 && displayedTemplate) {
-      console.log(`Submitting rating for template ${displayedTemplate.id}: ${currentRating} stars`);
+  const handleSubmitReview = () => {
+    if (currentRating > 0 && reviewText.trim() !== "" && displayedTemplate) {
+      console.log(`Submitting review for template ${displayedTemplate.id}: ${currentRating} stars, Review: "${reviewText}"`);
       toast({
-        title: "Rating Submitted!",
-        description: `Thank you for submitting your rating of ${currentRating} stars!`,
+        title: "Review Submitted!",
+        description: `Thank you for your review!`,
       });
-      setSubmittedRating(currentRating);
-      // To prevent immediate re-submission, you might want to keep currentRating
-      // or clear it and disable the button, e.g., setCurrentRating(0);
+      setSubmittedReview(true);
+      // Optionally reset form:
+      // setCurrentRating(0);
+      // setReviewText('');
+    } else if (currentRating === 0) {
+       toast({ title: "Missing Rating", description: "Please select a star rating.", variant: "destructive" });
+    } else {
+       toast({ title: "Missing Review Text", description: "Please write a review.", variant: "destructive" });
     }
   };
 
-  if (!displayedTemplate) { // Check displayedTemplate instead of template
+  if (!displayedTemplate) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 text-center">
         <AlertTriangle className="w-16 h-16 text-destructive mb-4" />
@@ -127,12 +154,13 @@ const TemplateDetailPage: React.FC = () => {
               <CardContent className="p-0 flex-grow space-y-4">
                 <p className="text-foreground leading-relaxed">{displayedTemplate.description}</p>
                 
+                {/* Overall Rating Display - Already well implemented */}
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center">
-                    {renderStars(displayedTemplate.averageRating)}
+                    {renderStars(displayedTemplate.averageRating, "w-5 h-5")}
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    ({displayedTemplate.averageRating.toFixed(1)} from {displayedTemplate.numberOfRatings} ratings)
+                    ({displayedTemplate.averageRating.toFixed(1)} from {displayedTemplate.numberOfRatings.toLocaleString()} ratings)
                   </span>
                 </div>
 
@@ -153,41 +181,47 @@ const TemplateDetailPage: React.FC = () => {
                 )}
               </CardContent>
               
-              {/* Rating Submission Section */}
-              <div className="mt-6 pt-6 border-t border-border">
-                <h4 className="text-md font-semibold text-foreground mb-3">Rate this template</h4>
-                <div className="flex items-center space-x-1 mb-3">
-                  {[1, 2, 3, 4, 5].map((starValue) => (
-                    <Star
-                      key={starValue}
-                      className={`w-7 h-7 cursor-pointer transition-colors duration-150 ease-in-out
-                        ${ (hoverRating || currentRating) >= starValue 
-                            ? 'text-yellow-400 fill-yellow-400' 
-                            : 'text-gray-300 hover:text-yellow-300'
-                        }
-                        ${ currentRating >= starValue && !hoverRating && 'text-yellow-500 fill-yellow-500' }
-                      `}
-                      onClick={() => handleRatingClick(starValue)}
-                      onMouseEnter={() => setHoverRating(starValue)}
-                      onMouseLeave={() => setHoverRating(0)}
-                      aria-label={`Rate ${starValue} star${starValue > 1 ? 's' : ''}`}
+              {/* User Review Submission Form (Placeholder) */}
+              <Card className="mt-6 pt-0 border-0 shadow-none">
+                <CardHeader className="p-0 mb-3">
+                  <CardTitle className="text-lg font-semibold text-foreground flex items-center">
+                    <MessageSquare className="mr-2 h-5 w-5 text-primary" /> Leave a Review
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-foreground mb-1.5">Your Rating:</p>
+                    <div className="flex items-center space-x-1">
+                      {renderInteractiveStars("w-7 h-7")}
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="reviewText" className="text-sm font-medium text-foreground">Your Review:</Label>
+                    <Textarea 
+                      id="reviewText"
+                      placeholder="Share your thoughts on this template..." 
+                      className="mt-1 min-h-[100px]"
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                      disabled={submittedReview}
                     />
-                  ))}
-                </div>
-                <Button 
-                  size="default" 
-                  className="w-full" 
-                  onClick={handleSubmitRating}
-                  disabled={currentRating === 0 || submittedRating === currentRating} // Disable if no rating or if current rating already submitted
-                >
-                  {submittedRating === currentRating && currentRating > 0 ? 'Rating Submitted!' : 'Submit Rating'}
-                </Button>
-                {submittedRating && submittedRating === currentRating && (
-                  <p className="text-sm text-green-600 mt-2 text-center">
-                    Thank you for your rating of {submittedRating} stars!
-                  </p>
-                )}
-              </div>
+                  </div>
+                  <Button 
+                    size="default" 
+                    className="w-full md:w-auto" 
+                    onClick={handleSubmitReview}
+                    disabled={submittedReview || currentRating === 0 || reviewText.trim() === ""}
+                  >
+                    {submittedReview ? 'Review Submitted!' : 'Submit Review'}
+                  </Button>
+                  {submittedReview && (
+                    <p className="text-sm text-green-600 mt-2">
+                      Thank you for your review!
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+              {/* End of Review Submission Section */}
 
               <div className="mt-auto pt-6"> {/* Pushes download button to bottom */}
                 <Button size="lg" className="w-full text-lg py-3 bg-primary hover:bg-primary/90" onClick={handleDownload}>
@@ -196,6 +230,62 @@ const TemplateDetailPage: React.FC = () => {
               </div>
             </div>
           </div>
+        </Card>
+
+        {/* Reviews List (Placeholder) */}
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-foreground">User Reviews</CardTitle>
+            <CardDescription>See what others are saying about this template.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Mock Review 1 */}
+            <div className="border-b border-border pb-4">
+              <div className="flex items-center mb-1">
+                <UserCircle size={20} className="mr-2 text-muted-foreground" />
+                <h4 className="font-semibold text-foreground">Alice M.</h4>
+                <div className="ml-auto flex items-center">
+                  {renderStars(5, "w-4 h-4")}
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-1.5">October 28, 2023</p>
+              <p className="text-foreground text-sm">
+                "Absolutely fantastic template! Saved me so much time and looks incredibly professional. Highly recommended."
+              </p>
+            </div>
+            {/* Mock Review 2 */}
+            <div className="border-b border-border pb-4">
+              <div className="flex items-center mb-1">
+                <UserCircle size={20} className="mr-2 text-muted-foreground" />
+                <h4 className="font-semibold text-foreground">Bob K.</h4>
+                <div className="ml-auto flex items-center">
+                  {renderStars(4, "w-4 h-4")}
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-1.5">October 25, 2023</p>
+              <p className="text-foreground text-sm">
+                "Great design and easy to use. One minor section was a bit tricky to customize, but overall very satisfied."
+              </p>
+            </div>
+            {/* Mock Review 3 */}
+            <div>
+              <div className="flex items-center mb-1">
+                <UserCircle size={20} className="mr-2 text-muted-foreground" />
+                <h4 className="font-semibold text-foreground">Charlie P.</h4>
+                <div className="ml-auto flex items-center">
+                   {renderStars(3, "w-4 h-4")}
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground mb-1.5">October 22, 2023</p>
+              <p className="text-foreground text-sm">
+                "It's a decent template. Does the job, but I found it a bit too generic for my specific needs. Good starting point though."
+              </p>
+            </div>
+            {/* Comment: This list would be dynamically populated with actual reviews from a backend. Pagination or a "Load More" button might be needed for many reviews. */}
+            {displayedTemplate.numberOfRatings === 0 && (
+                 <p className="text-muted-foreground text-center py-4">No reviews yet. Be the first to leave a review!</p>
+            )}
+          </CardContent>
         </Card>
       </div>
     </div>

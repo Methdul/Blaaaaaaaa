@@ -50,8 +50,8 @@ const Homepage = () => {
       title: "Creator Marketplace",
       description: "Explore unique templates from talented creators or monetize your own designs. Ready to share your work and earn?",
       cta: { // Adding CTA to this specific feature card
-        text: "Start Creating",
-        link: "/become-creator",
+        text: "Start Creating", // Text can remain, or be "Apply Now"
+        link: "/become-creator-application", // Updated link
         className: "bg-orange-500 hover:bg-orange-600 text-white" // Custom orange style for this button
       }
     },
@@ -161,7 +161,7 @@ const Homepage = () => {
               </Link>
             </Button>
             <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 h-auto hover-lift group">
-              <Link to="/become-creator" className="flex items-center">
+              <Link to="/become-creator-application" className="flex items-center">
                 Become a Creator
               </Link>
             </Button>
@@ -367,7 +367,7 @@ const Homepage = () => {
             Join our platform as a creator and start monetizing your unique template designs today. Reach a wide audience and build your brand with DocAI.
           </p>
           <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-10 py-5 h-auto hover-lift text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <Link to="/become-creator">
+            <Link to="/become-creator-application">
               Become a Creator Now
             </Link>
           </Button>
