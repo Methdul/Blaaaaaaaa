@@ -165,7 +165,7 @@ const Homepage = () => {
                 Become a Creator
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-2 border-white text-white bg-black/10 hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 h-auto hover-lift backdrop-blur-sm">
+            <Button asChild variant="outline" size="lg" className="border-2 border-white text-white bg-black/25 hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 h-auto hover-lift backdrop-blur-sm">
               <Link to="/templates">Explore Templates</Link>
             </Button>
           </div>

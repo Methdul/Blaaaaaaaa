@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 import { getUserName, getUserEmail, isCreator } from '@/lib/authUtils';
-import { Sparkles, UserCheck, ListChecks, Users, TrendingUp, Send } from 'lucide-react';
+import { Sparkles, UserCheck, ListChecks, Users, TrendingUp, Send, DollarSign } from 'lucide-react'; // Added DollarSign
 
 // Zod schema for validation
 const becomeCreatorSchema = z.object({

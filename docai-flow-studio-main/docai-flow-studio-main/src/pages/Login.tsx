@@ -107,68 +107,64 @@ const Login = () => {
           </CardHeader>
           
           <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit(onSubmit)}> {/* Form wraps Tabs */}
-              <Tabs defaultValue="user" onValueChange={(value) => setUserType(value as 'user' | 'creator')}>
-                <TabsList className="grid w-full grid-cols-2 glass">
-                  <TabsTrigger value="user" className="flex items-center space-x-2 data-[state=active]:bg-docai-blue data-[state=active]:text-white">
-                    <User className="w-4 h-4" />
-                    <span>User</span>
-                  </TabsTrigger>
-                  <TabsTrigger value="creator" className="flex items-center space-x-2 data-[state=active]:bg-docai-purple data-[state=active]:text-white">
-                    <Settings className="w-4 h-4" />
-                    <span>Creator</span>
-                  </TabsTrigger>
-                </TabsList>
-                
-                {/* Common form fields will be outside TabsContent if truly common, or repeated if context changes */}
-                {/* For this structure, TabsContent will just hold the descriptive text. Inputs are below. */}
-                <TabsContent value="user" className="mt-6 space-y-4">
-                   <div className="text-center text-sm text-gray-600 mb-4">
-                    Access templates, AI writer, and document builders.
-                  </div>
-                </TabsContent>
-                <TabsContent value="creator" className="mt-6 space-y-4">
-                  <div className="text-center text-sm text-gray-600 mb-4">
-                    Upload templates, earn money, and access analytics.
-                  </div>
-                </TabsContent>
-
-                {/* Common Input Fields - Placed outside TabsContent but inside Form */}
-                <div className="space-y-4 px-1 mt-4"> {/* Added px-1 and mt-4 for spacing */}
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      className="glass border-white/20"
-                      {...register("email")}
-                      aria-invalid={errors.email ? "true" : "false"}
-                    />
-                    {errors.email && <p className="text-sm font-medium text-destructive mt-1">{errors.email.message}</p>}
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="••••••••"
-                      className="glass border-white/20"
-                      {...register("password")}
-                      aria-invalid={errors.password ? "true" : "false"}
-                    />
-                    {errors.password && <p className="text-sm font-medium text-destructive mt-1">{errors.password.message}</p>}
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className={`w-full text-white font-semibold ${userType === 'user' ? 'bg-docai-blue hover:bg-docai-blue-dark' : 'bg-docai-purple hover:bg-docai-purple-light'}`}
-                  >
-                    Sign In {userType === 'creator' ? 'as Creator' : ''}
-                  </Button>
+            <Tabs defaultValue="user" onValueChange={(value) => setUserType(value as 'user' | 'creator')}>
+              <TabsList className="grid w-full grid-cols-2 glass">
+                <TabsTrigger value="user" className="flex items-center space-x-2 data-[state=active]:bg-docai-blue data-[state=active]:text-white">
+                  <User className="w-4 h-4" />
+                  <span>User</span>
+                </TabsTrigger>
+                <TabsTrigger value="creator" className="flex items-center space-x-2 data-[state=active]:bg-docai-purple data-[state=active]:text-white">
+                  <Settings className="w-4 h-4" />
+                  <span>Creator</span>
+                </TabsTrigger>
+              </TabsList>
+              {/* Conditional descriptive text based on selected tab */}
+              {userType === 'user' && (
+                <div className="text-center text-sm text-gray-600 mt-4 mb-2"> {/* Adjusted margins */}
+                  Access templates, AI writer, and document builders.
                 </div>
-              </Tabs>
+              )}
+              {userType === 'creator' && (
+                <div className="text-center text-sm text-gray-600 mt-4 mb-2"> {/* Adjusted margins */}
+                  Upload templates, earn money, and access analytics.
+                </div>
+              )}
+            </Tabs>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-1"> {/* Form now only wraps inputs + button */}
+              {/* Common Input Fields */}
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="glass border-white/20"
+                  {...register("email")}
+                  aria-invalid={errors.email ? "true" : "false"}
+                />
+                {errors.email && <p className="text-sm font-medium text-destructive mt-1">{errors.email.message}</p>}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  className="glass border-white/20"
+                  {...register("password")}
+                  aria-invalid={errors.password ? "true" : "false"}
+                />
+                {errors.password && <p className="text-sm font-medium text-destructive mt-1">{errors.password.message}</p>}
+              </div>
+              
+              <Button 
+                type="submit" 
+                className={`w-full text-white font-semibold ${userType === 'user' ? 'bg-docai-blue hover:bg-docai-blue-dark' : 'bg-docai-purple hover:bg-docai-purple-light'}`}
+              >
+                Sign In {userType === 'creator' ? 'as Creator' : ''}
+              </Button>
             </form>
             
             <div className="text-center">
