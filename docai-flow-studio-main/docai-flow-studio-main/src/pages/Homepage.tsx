@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import InteractiveBackground from '@/components/InteractiveBackground';
-import { FileText, Zap, Users, Star, ArrowDown, Sparkles, MousePointer2, TrendingUp } from 'lucide-react';
+import FeatureCard from '@/components/FeatureCard'; // Import FeatureCard
+import { FileText, Zap, Users, Star, ArrowDown, Sparkles, MousePointer2, TrendingUp, BarChart2, FileCheck, LayoutGrid, Smile, Clock, Award, DollarSign, Settings2 } from 'lucide-react'; // Import new icons for benefits
 
 const Homepage = () => {
-  const features = [
+  const oldFeatures = [ // Renamed to avoid conflict
     {
       icon: <FileText className="w-8 h-8" />,
       title: "Smart Templates",
@@ -30,6 +31,34 @@ const Homepage = () => {
       title: "Premium Quality",
       description: "Professional-grade documents every time",
       color: "from-violet-500 to-violet-600"
+    }
+  ];
+
+  const newFeatures = [
+    {
+      icon: <Zap size={48} className="text-blue-500" />,
+      title: "AI-Powered Generation",
+      description: "Leverage cutting-edge AI to generate document drafts and content suggestions in seconds."
+    },
+    {
+      icon: <FileText size={48} className="text-green-500" />,
+      title: "Professional Templates",
+      description: "Access a vast library of professionally designed templates for resumes, invoices, letters, and more."
+    },
+    {
+      icon: <Users size={48} className="text-purple-500" />,
+      title: "Creator Marketplace",
+      description: "Explore unique templates from talented creators or monetize your own designs. Ready to share your work and earn?",
+      cta: { // Adding CTA to this specific feature card
+        text: "Start Creating",
+        link: "/become-creator",
+        className: "bg-orange-500 hover:bg-orange-600 text-white" // Custom orange style for this button
+      }
+    },
+    {
+      icon: <BarChart2 size={48} className="text-red-500" />,
+      title: "Insightful Analytics",
+      description: "Track your document usage, template performance, and creator earnings with our detailed analytics."
     }
   ];
 
@@ -57,10 +86,56 @@ const Homepage = () => {
     }
   ];
 
-  const stats = [
+  const oldStats = [ // Renamed to avoid conflict
     { value: "50K+", label: "Documents Created", icon: <FileText className="w-6 h-6" /> },
     { value: "2K+", label: "Active Creators", icon: <Users className="w-6 h-6" /> },
     { value: "$100K+", label: "Creator Earnings", icon: <TrendingUp className="w-6 h-6" /> }
+  ];
+
+  const newPageStats = [
+    {
+      icon: <FileCheck size={32} className="text-green-500 mb-2" />,
+      value: "10K+",
+      label: "Documents Created"
+    },
+    {
+      icon: <LayoutGrid size={32} className="text-blue-500 mb-2" />,
+      value: "500+",
+      label: "Templates Available"
+    },
+    {
+      icon: <Users size={32} className="text-purple-500 mb-2" />,
+      value: "1K+",
+      label: "Active Creators"
+    },
+    {
+      icon: <Smile size={32} className="text-yellow-500 mb-2" />,
+      value: "99%",
+      label: "User Satisfaction"
+    }
+  ];
+
+  const benefits = [
+    {
+      icon: <Clock className="w-7 h-7 text-blue-500" />,
+      title: "Save Time & Effort",
+      description: "Streamline your workflow with AI assistance and ready-to-use templates, significantly reducing document creation time."
+    },
+    {
+      icon: <Award className="w-7 h-7 text-green-500" />,
+      title: "Professional & Polished Results",
+      description: "Ensure your documents are always professional and error-free with high-quality templates and smart editing tools."
+    },
+    {
+      icon: <DollarSign className="w-7 h-7 text-purple-500" />,
+      title: "Monetize Your Expertise",
+      description: "For creators, our platform offers a unique opportunity to showcase your template designs and earn revenue."
+    },
+    {
+      icon: <Settings2 className="w-7 h-7 text-red-500" />,
+      title: "Flexible & Customizable",
+      description: "Tailor documents to your exact needs with versatile templates and intuitive customization options."
+    }
   ];
 
   return (
@@ -71,47 +146,28 @@ const Homepage = () => {
         <InteractiveBackground />
         
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center mb-6 animate-fade-in">
-            <Sparkles className="w-8 h-8 text-yellow-400 mr-3 animate-pulse" />
-            <span className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 text-white text-sm font-medium">
-              ✨ AI-Powered Document Creation
-            </span>
-          </div>
-          
           <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 animate-fade-in leading-tight">
-            Create Smart Documents
-            <span className="block bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-              with AI
-            </span>
+            Unlock Your Document Potential
           </h1>
           
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto animate-fade-in leading-relaxed" style={{animationDelay: '0.2s'}}>
-            The future of document creation is here. Build resumes, invoices, letters, and more with intelligent AI assistance.
+            Create, customize, and share professional documents with ease. Leverage AI-powered tools and a vast library of templates.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in mb-12" style={{animationDelay: '0.4s'}}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in mb-12 flex-wrap" style={{animationDelay: '0.4s'}}>
             <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-4 h-auto hover-lift group">
-              <Link to="/templates" className="flex items-center">
-                <MousePointer2 className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                Try Templates
+              <Link to="/login" className="flex items-center">
+                Get Started Now
+              </Link>
+            </Button>
+            <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-4 h-auto hover-lift group">
+              <Link to="/become-creator" className="flex items-center">
+                Become a Creator
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 h-auto hover-lift backdrop-blur-sm">
-              <Link to="/creator-dashboard">Become a Creator</Link>
+              <Link to="/templates">Explore Templates</Link>
             </Button>
-          </div>
-
-          {/* Interactive Stats Preview */}
-          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto animate-fade-in" style={{animationDelay: '0.6s'}}>
-            {stats.map((stat, index) => (
-              <div key={index} className="glass border border-white/20 rounded-xl p-4 hover-lift group cursor-pointer">
-                <div className="text-white/70 group-hover:text-white transition-colors mb-1">
-                  {stat.icon}
-                </div>
-                <div className="text-2xl font-bold text-white">{stat.value}</div>
-                <div className="text-xs text-white/70">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
         
@@ -120,7 +176,32 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* New Feature Cards Section */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-foreground mb-4">
+              Discover Our Key Features
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Explore the core functionalities that make DocAI the ultimate document solution.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {newFeatures.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+                cta={feature.cta} // Pass cta prop
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Existing Features Section (Consider removing or refactoring if redundant) */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -137,7 +218,7 @@ const Homepage = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {oldFeatures.map((feature, index) => ( // Changed to oldFeatures
               <Card key={index} className="hover-lift glass border-0 shadow-lg group cursor-pointer transition-all duration-300 hover:shadow-2xl">
                 <CardContent className="p-6 text-center">
                   <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white group-hover:scale-110 transition-transform duration-300`}>
@@ -152,7 +233,68 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Enhanced Stats Section */}
+      {/* New Statistics Display Section */}
+      <section className="py-20 bg-muted/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-foreground mb-4">
+              Join Our Growing Community
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Numbers that speak for our vibrant platform and satisfied users.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {newPageStats.map((stat, index) => (
+              <div key={index} className="bg-card p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow">
+                <div className="flex justify-center items-center">
+                 {stat.icon}
+                </div>
+                <h3 className="text-4xl font-bold text-primary mt-2 mb-1">{stat.value}</h3>
+                <p className="text-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-display font-bold text-foreground mb-4">
+              Unlock Your Productivity
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Discover how DocAI empowers you to create better documents, faster.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Placeholder for image/graphic - Column 1 */}
+            <div className="hidden md:flex justify-center items-center p-8 bg-muted/30 rounded-lg min-h-[300px]">
+              {/* Replace this div with an <img /> tag or a more complex graphic component later */}
+              <Sparkles size={64} className="text-primary opacity-50" />
+              <p className="ml-4 text-muted-foreground">Illustrative Graphic/Image Here</p>
+            </div>
+            {/* Benefits List - Column 2 */}
+            <div className="space-y-8">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-start space-x-4 p-4 rounded-lg hover:bg-muted/20 transition-colors">
+                  <div className="flex-shrink-0 mt-1">
+                    {benefit.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg text-foreground mb-1">{benefit.title}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Stats Section - This is the old one, I've renamed its data source to oldStats */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,7 +303,7 @@ const Homepage = () => {
             <p className="text-white/80 text-lg">Join our growing community of document creators</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
-            {stats.map((stat, index) => (
+            {oldStats.map((stat, index) => ( // Changed to oldStats
               <div key={index} className="group">
                 <div className="flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
@@ -211,6 +353,24 @@ const Homepage = () => {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Dedicated Creator CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <Sparkles className="w-12 h-12 text-orange-500 mx-auto mb-6 animate-pulse" />
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6 leading-tight">
+            Ready to Share Your Creativity?
+          </h2>
+          <p className="text-xl text-gray-700 mb-10 leading-relaxed max-w-2xl mx-auto">
+            Join our platform as a creator and start monetizing your unique template designs today. Reach a wide audience and build your brand with DocAI.
+          </p>
+          <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-10 py-5 h-auto hover-lift text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Link to="/become-creator">
+              Become a Creator Now
+            </Link>
+          </Button>
         </div>
       </section>
 
