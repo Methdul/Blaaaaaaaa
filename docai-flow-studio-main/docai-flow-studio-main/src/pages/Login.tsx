@@ -139,7 +139,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="you@example.com"
-                  className="glass border-white/20"
+                    className="bg-background/70 border-border placeholder:text-muted-foreground focus:border-primary" // Updated classes
                   {...register("email")}
                   aria-invalid={errors.email ? "true" : "false"}
                 />
@@ -152,7 +152,7 @@ const Login = () => {
                   id="password"
                   type="password"
                   placeholder="••••••••"
-                  className="glass border-white/20"
+                    className="bg-background/70 border-border placeholder:text-muted-foreground focus:border-primary" // Updated classes
                   {...register("password")}
                   aria-invalid={errors.password ? "true" : "false"}
                 />

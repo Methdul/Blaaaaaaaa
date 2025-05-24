@@ -395,7 +395,7 @@ const Homepage = () => {
                 <ArrowDown className="w-5 h-5 ml-2 rotate-[-90deg]" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 h-auto hover-lift backdrop-blur-sm">
+            <Button asChild variant="outline" size="lg" className="border-2 border-white text-white bg-black/25 hover:bg-white hover:text-gray-900 font-semibold px-8 py-4 h-auto hover-lift backdrop-blur-sm">
               <Link to="/templates">Browse Templates</Link>
             </Button>
           </div>
