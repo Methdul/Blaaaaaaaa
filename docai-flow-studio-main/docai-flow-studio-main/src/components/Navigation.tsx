@@ -22,12 +22,21 @@ const Navigation = () => {
   const [authStatus, setAuthStatus] = useState(isAuthenticated());
   const [userName, setUserName] = useState<string | null>(null);
   const [userIsCreator, setUserIsCreator] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme;
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => { // Added type for theme state
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme as 'light' | 'dark'; // Ensure type correctness
+      }
+      // Check if window.matchMedia is available and then use it
+      if (window.matchMedia && typeof window.matchMedia === 'function') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    } catch (_) {
+      // Fallback if localStorage or matchMedia access fails for any reason
+      // console.error("Error accessing theme preference:", _); // Optional: log error for debugging
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return 'light'; // Default to 'light' theme if all else fails or is unavailable
   });
 
   useEffect(() => {
