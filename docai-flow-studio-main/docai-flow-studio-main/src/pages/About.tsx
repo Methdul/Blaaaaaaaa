@@ -66,25 +66,25 @@ const About = () => {
       icon: <Zap className="w-8 h-8" />,
       title: "Innovation",
       description: "We constantly push the boundaries of what's possible with AI and document creation.",
-      color: "bg-blue-100 text-blue-600"
+      color: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Community",
       description: "We believe in empowering creators and building a supportive community ecosystem.",
-      color: "bg-green-100 text-green-600"
+      color: "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300"
     },
     {
       icon: <Target className="w-8 h-8" />,
       title: "Quality",
       description: "Every template and feature is crafted with attention to detail and professional standards.",
-      color: "bg-purple-100 text-purple-600"
+      color: "bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300"
     },
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Accessibility",
       description: "We make professional document creation accessible to everyone, everywhere.",
-      color: "bg-orange-100 text-orange-600"
+      color: "bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300"
     }
   ];
 
@@ -96,14 +96,14 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
+    <div className="min-h-screen bg-background pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-display font-bold text-gray-900 mb-6">
+          <h1 className="text-5xl font-display font-bold text-foreground mb-6">
             About DocAi
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We're on a mission to revolutionize document creation through the power of artificial intelligence. 
             Our platform empowers individuals and businesses to create professional documents with unprecedented ease and speed.
           </p>
@@ -113,15 +113,15 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl flex items-center space-x-3">
-                <div className="w-10 h-10 bg-docai-blue/10 rounded-lg flex items-center justify-center">
-                  <Target className="w-6 h-6 text-docai-blue" />
+              <CardTitle className="text-2xl flex items-center space-x-3 text-foreground">
+                <div className="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center">
+                  <Target className="w-6 h-6 text-primary" />
                 </div>
                 <span>Our Mission</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 To democratize professional document creation by combining cutting-edge AI technology with 
                 human creativity. We believe everyone should have access to tools that help them communicate 
                 effectively and present themselves professionally.
@@ -131,15 +131,15 @@ const About = () => {
 
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-2xl flex items-center space-x-3">
-                <div className="w-10 h-10 bg-docai-purple/10 rounded-lg flex items-center justify-center">
-                  <Star className="w-6 h-6 text-docai-purple" />
+              <CardTitle className="text-2xl flex items-center space-x-3 text-foreground">
+                <div className="w-10 h-10 bg-purple-500/10 dark:bg-purple-700/20 rounded-lg flex items-center justify-center">
+                  <Star className="w-6 h-6 text-purple-500 dark:text-purple-400" />
                 </div>
                 <span>Our Vision</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 To become the global standard for AI-powered document creation, where millions of users 
                 and creators collaborate to build the future of professional communication. We envision 
                 a world where creating stunning documents is as simple as having a conversation.
@@ -150,18 +150,18 @@ const About = () => {
 
         {/* Stats */}
         <div className="mb-16">
-          <h2 className="text-3xl font-display font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-3xl font-display font-bold text-center text-foreground mb-8">
             DocAi by the Numbers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
               <Card key={index} className="text-center border-0 shadow-lg hover-lift">
                 <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-docai-blue/10 rounded-lg flex items-center justify-center mx-auto mb-4 text-docai-blue">
+                  <div className="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary">
                     {stat.icon}
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+                  <div className="text-muted-foreground">{stat.label}</div>
                 </CardContent>
               </Card>
             ))}
@@ -170,7 +170,7 @@ const About = () => {
 
         {/* Values */}
         <div className="mb-16">
-          <h2 className="text-3xl font-display font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-3xl font-display font-bold text-center text-foreground mb-8">
             Our Values
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -180,8 +180,8 @@ const About = () => {
                   <div className={`w-16 h-16 ${value.color} rounded-xl flex items-center justify-center mx-auto mb-4`}>
                     {value.icon}
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-2">{value.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>
+                  <h3 className="font-bold text-foreground mb-2">{value.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -190,7 +190,7 @@ const About = () => {
 
         {/* Team */}
         <div className="mb-16">
-          <h2 className="text-3xl font-display font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-3xl font-display font-bold text-center text-foreground mb-8">
             Meet Our Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -200,9 +200,9 @@ const About = () => {
                   <div className="w-20 h-20 bg-gradient-to-r from-docai-blue to-docai-purple rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
                     {member.avatar}
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-1">{member.name}</h3>
-                  <p className="text-docai-blue font-medium mb-3">{member.role}</p>
-                  <p className="text-sm text-gray-600 leading-relaxed">{member.bio}</p>
+                  <h3 className="font-bold text-foreground mb-1">{member.name}</h3>
+                  <p className="text-primary font-medium mb-3">{member.role}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
                 </CardContent>
               </Card>
             ))}
@@ -211,20 +211,20 @@ const About = () => {
 
         {/* Timeline */}
         <div className="mb-16">
-          <h2 className="text-3xl font-display font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-3xl font-display font-bold text-center text-foreground mb-8">
             Our Journey
           </h2>
           <div className="space-y-6">
             {milestones.map((milestone, index) => (
               <div key={index} className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <Badge variant="outline" className="bg-docai-blue text-white border-docai-blue font-semibold">
+                  <Badge className="bg-primary text-primary-foreground font-semibold border-transparent">
                     {milestone.year}
                   </Badge>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 mb-1">{milestone.title}</h3>
-                  <p className="text-gray-600">{milestone.description}</p>
+                  <h3 className="font-semibold text-foreground mb-1">{milestone.title}</h3>
+                  <p className="text-muted-foreground">{milestone.description}</p>
                 </div>
               </div>
             ))}
@@ -233,7 +233,7 @@ const About = () => {
 
         {/* Testimonials */}
         <div className="mb-16">
-          <h2 className="text-3xl font-display font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-3xl font-display font-bold text-center text-foreground mb-8">
             What People Say
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -256,14 +256,14 @@ const About = () => {
             ].map((testimonial, index) => (
               <Card key={index} className="border-0 shadow-lg">
                 <CardContent className="p-6">
-                  <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
+                  <p className="text-muted-foreground italic mb-4">"{testimonial.quote}"</p>
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-docai-blue rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold text-sm">
                       {testimonial.author.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900">{testimonial.author}</div>
-                      <div className="text-sm text-gray-600">{testimonial.role}</div>
+                      <div className="font-semibold text-foreground">{testimonial.author}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                     </div>
                   </div>
                 </CardContent>

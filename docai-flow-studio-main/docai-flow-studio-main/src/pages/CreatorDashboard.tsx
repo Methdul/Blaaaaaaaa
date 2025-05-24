@@ -5,11 +5,11 @@ import {
   DollarSign, Download, Upload, ListChecks, BarChart3, HandCoins, LayoutGrid, Star, 
   Eye, FilePenLine, PlusCircle, ChevronDown, FileText as PageIcon, FileUp,
   CalendarDays, Banknote, Landmark, CreditCard, Info, // Added for Earnings Tab
-  TrendingUp, LineChart, CalendarClock // Added for Analytics Tab
+  TrendingUp, LineChart, CalendarClock, Users // Added Users for Analytics Tab
 } from 'lucide-react'; 
 import { getUserName } from '@/lib/authUtils';
 import { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form'; // Added Controller
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '@/components/ui/input';
@@ -347,24 +347,29 @@ const CreatorDashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="category" className={errors.category ? 'text-destructive' : ''}>Category</Label>
-                      <Select 
-                        onValueChange={(value) => control._formValues.category = value as TemplateUploadFormValues['category']} // Manually update form state for Select
-                        defaultValue={control._formValues.category} // Set default value
-                      >
-                        <SelectTrigger id="category" className={errors.category ? 'border-destructive focus-visible:ring-destructive' : ''}>
-                          <SelectValue placeholder="Select a category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Resume">Resume</SelectItem>
-                          <SelectItem value="Invoice">Invoice</SelectItem>
-                          <SelectItem value="Letter">Letter</SelectItem>
-                          <SelectItem value="Proposal">Proposal</SelectItem>
-                          <SelectItem value="Contract">Contract</SelectItem>
-                          <SelectItem value="Other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {/* Hidden input to register category with react-hook-form and show errors */}
-                      <input type="hidden" {...register("category")} />
+                      <Controller
+                        name="category"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value} // Use value from field
+                            defaultValue={field.value} // Default value from react-hook-form
+                          >
+                            <SelectTrigger id="category" className={errors.category ? 'border-destructive focus-visible:ring-destructive' : ''}>
+                              <SelectValue placeholder="Select a category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Resume">Resume</SelectItem>
+                              <SelectItem value="Invoice">Invoice</SelectItem>
+                              <SelectItem value="Letter">Letter</SelectItem>
+                              <SelectItem value="Proposal">Proposal</SelectItem>
+                              <SelectItem value="Contract">Contract</SelectItem>
+                              <SelectItem value="Other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
                       {errors.category && <p className="text-sm font-medium text-destructive">{errors.category.message}</p>}
                     </div>
 

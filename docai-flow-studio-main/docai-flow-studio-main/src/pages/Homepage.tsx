@@ -202,30 +202,30 @@ const Homepage = () => {
       </section>
 
       {/* Existing Features Section (Consider removing or refactoring if redundant) */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-background"> {/* Updated background */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-blue-100 text-blue-600 rounded-full px-4 py-2 text-sm font-medium mb-4">
+            <div className="inline-flex items-center bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 rounded-full px-4 py-2 text-sm font-medium mb-4"> {/* Updated badge */}
               <Star className="w-4 h-4 mr-2" />
               Why Choose DocAi?
             </div>
-            <h2 className="text-4xl font-display font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-display font-bold text-foreground mb-4"> {/* Updated text color */}
               Experience the Next Generation
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto"> {/* Updated text color */}
               Powerful AI tools and creator marketplace designed for modern document creation.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {oldFeatures.map((feature, index) => ( // Changed to oldFeatures
-              <Card key={index} className="hover-lift glass border-0 shadow-lg group cursor-pointer transition-all duration-300 hover:shadow-2xl">
+              <Card key={index} className="hover-lift glass border-0 shadow-lg group cursor-pointer transition-all duration-300 hover:shadow-2xl dark:bg-slate-800/60"> {/* Added dark mode bg for glass card for better visibility if needed, or keep as is for more transparency */}
                 <CardContent className="p-6 text-center">
                   <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white group-hover:scale-110 transition-transform duration-300`}>
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-blue-600 transition-colors">{feature.title}</h3> {/* Updated text color */}
+                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p> {/* Updated text color */}
                 </CardContent>
               </Card>
             ))}
@@ -317,17 +317,17 @@ const Homepage = () => {
       </section>
 
       {/* Enhanced Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background"> {/* Updated background */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-purple-100 text-purple-600 rounded-full px-4 py-2 text-sm font-medium mb-4">
+            <div className="inline-flex items-center bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 rounded-full px-4 py-2 text-sm font-medium mb-4"> {/* Updated badge */}
               <Star className="w-4 h-4 mr-2" />
               Customer Stories
             </div>
-            <h2 className="text-4xl font-display font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-display font-bold text-foreground mb-4"> {/* Updated text color */}
               What Our Users Say
             </h2>
-            <p className="text-xl text-gray-600">Real feedback from real creators and users</p>
+            <p className="text-xl text-muted-foreground">Real feedback from real creators and users</p> {/* Updated text color */}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -339,14 +339,14 @@ const Homepage = () => {
                       <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-6 italic leading-relaxed">"{testimonial.content}"</p>
+                  <p className="text-muted-foreground mb-6 italic leading-relaxed">"{testimonial.content}"</p> {/* Updated text color */}
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold mr-4 group-hover:scale-110 transition-transform duration-300">
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{testimonial.name}</div>
-                      <div className="text-sm text-gray-600">{testimonial.role}</div>
+                      <div className="font-semibold text-foreground group-hover:text-blue-600 transition-colors">{testimonial.name}</div> {/* Updated text color */}
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div> {/* Updated text color */}
                     </div>
                   </div>
                 </CardContent>
@@ -357,16 +357,16 @@ const Homepage = () => {
       </section>
 
       {/* Dedicated Creator CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100">
+      <section className="py-20 bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-700 dark:to-gray-600"> {/* Updated background */}
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <Sparkles className="w-12 h-12 text-orange-500 mx-auto mb-6 animate-pulse" />
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6 leading-tight">
+          <Sparkles className="w-12 h-12 text-orange-500 dark:text-orange-400 mx-auto mb-6 animate-pulse" /> {/* Adjusted dark mode icon color */}
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight"> {/* Updated text color */}
             Ready to Share Your Creativity?
           </h2>
-          <p className="text-xl text-gray-700 mb-10 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto"> {/* Updated text color */}
             Join our platform as a creator and start monetizing your unique template designs today. Reach a wide audience and build your brand with DocAI.
           </p>
-          <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-10 py-5 h-auto hover-lift text-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Button asChild size="lg" className="bg-orange-500 hover:bg-orange-600 text-white dark:bg-orange-600 dark:hover:bg-orange-700 font-semibold px-10 py-5 h-auto hover-lift text-lg shadow-lg hover:shadow-xl transition-shadow duration-300"> {/* Ensured button remains vibrant */}
             <Link to="/become-creator-application">
               Become a Creator Now
             </Link>
