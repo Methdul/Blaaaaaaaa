@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Search } from 'lucide-react';
 import { mockTemplates } from '@/data/mockTemplates';
-import { TemplateCard } from '@/components/TemplateCard';
+import TemplateCard from '@/components/TemplateCard'; // Corrected import
 import { Template } from '@/types/template';
 
 const Templates = () => {
