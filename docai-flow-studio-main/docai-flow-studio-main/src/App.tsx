@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreatorDashboard from "./pages/CreatorDashboard";
-import UserProfile from "./pages/UserProfile";
+import UserProfilePage from "./pages/UserProfilePage"; // Changed from UserProfile
 import Templates from "./pages/Templates";
 import TemplateDetailPage from './pages/TemplateDetailPage';
 import BecomeCreatorPage from './pages/BecomeCreatorPage'; // Import BecomeCreatorPage
@@ -25,6 +25,7 @@ import LetterBuilder from "./pages/LetterBuilder";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import BecomeCreatorApplicationPage from "./pages/BecomeCreatorApplicationPage"; // Import new application page
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/templates" element={<Templates />} /> {/* Templates can be public */}
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
+              <Route path="/become-creator-application" element={<BecomeCreatorApplicationPage />} /> {/* New public route */}
 
               {/* Protected Routes */}
               <Route 
@@ -98,7 +100,7 @@ const App = () => (
                 path="/profile"
                 element={
                   <ProtectedRoute>
-                    <UserProfile />
+                    <UserProfilePage />
                   </ProtectedRoute>
                 }
               />

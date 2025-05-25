@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Search } from 'lucide-react';
+import { Search, Filter, ListFilter } from 'lucide-react'; // Added Filter and ListFilter icons
 import { mockTemplates } from '@/data/mockTemplates';
 import TemplateCard from '@/components/TemplateCard'; // Corrected import
 import { Template } from '@/types/template';
@@ -71,16 +71,64 @@ const Templates = () => {
                 </SelectContent>
               </Select>
               {/* Price filter select removed */}
+
+              {/* Placeholder for Advanced Filtering Button */}
+              <Button variant="outline" className="w-full md:w-auto bg-card">
+                <Filter className="mr-2 h-4 w-4" />
+                Advanced Filters
+              </Button>
+              {/* TODO: Implement Advanced Filtering functionality. 
+                   This could include filters for:
+                   - Average Rating (e.g., 4 stars and up)
+                   - Popularity (e.g., based on downloads or views - requires tracking)
+                   - Specific Tags (multi-select or advanced tag input)
+                   - Price Range (if price is ever added back to Template type)
+                   - Creator
+                   Consider a popover or a separate modal for these filters.
+              */}
             </div>
           </CardContent>
         </Card>
-
-        {/* All Templates Section */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-foreground mb-6"> {/* Changed text-gray-900 */}
-            {selectedCategory === 'all' ? 'All Templates' : `${selectedCategory} Templates`} ({filteredTemplates.length})
-          </h2>
+        
+        {/* Controls Bar: Sorting and Layout Options */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">
+              {selectedCategory === 'all' ? 'All Templates' : `${selectedCategory} Templates`} 
+              <span className="text-base font-normal text-muted-foreground ml-2">({filteredTemplates.length} results)</span>
+            </h2>
+          </div>
+          
+          {/* Placeholder for Sorting Options */}
+          <div className="flex items-center gap-2">
+            <Label htmlFor="sort-by" className="text-sm text-muted-foreground whitespace-nowrap">Sort by:</Label>
+            <Select defaultValue="popularity_desc">
+                <SelectTrigger id="sort-by" className="w-auto md:w-[180px] bg-card">
+                    <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="popularity_desc">Popularity (High to Low)</SelectItem>
+                    <SelectItem value="popularity_asc">Popularity (Low to High)</SelectItem>
+                    <SelectItem value="rating_desc">Rating (High to Low)</SelectItem>
+                    <SelectItem value="rating_asc">Rating (Low to High)</SelectItem>
+                    <SelectItem value="newest_desc">Newest First</SelectItem>
+                    <SelectItem value="newest_asc">Oldest First</SelectItem>
+                    <SelectItem value="name_asc">Name (A-Z)</SelectItem>
+                    <SelectItem value="name_desc">Name (Z-A)</SelectItem>
+                </SelectContent>
+            </Select>
+            {/* TODO: Implement actual sorting logic based on the selected value. 
+                 This will likely involve updating the `filteredTemplates` logic or applying
+                 a sort function before mapping to <TemplateCard />.
+            */}
+            {/* Placeholder for Layout Toggle (e.g., Grid/List view) - Future enhancement
+            <Button variant="outline" size="icon" className="ml-2 bg-card">
+                <ListFilter className="h-4 w-4" />
+            </Button> 
+            */}
+          </div>
         </div>
+
 
         {filteredTemplates.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -99,9 +147,10 @@ const Templates = () => {
                 onClick={() => {
                   setSearchTerm('');
                   setSelectedCategory('all');
+                  // TODO: Add logic to reset any new advanced filters or sorting options here.
                 }}
               >
-                Clear Filters
+                Clear Filters & Sort
               </Button>
             </CardContent>
           </Card>
