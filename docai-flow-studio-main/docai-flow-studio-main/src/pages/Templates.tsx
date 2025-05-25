@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import { Search, Filter, ListFilter } from 'lucide-react'; // Added Filter and ListFilter icons
 import { mockTemplates } from '@/data/mockTemplates';
 import TemplateCard from '@/components/TemplateCard'; // Corrected import

@@ -10,6 +10,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   if (!isAuthenticated()) {
     // User not authenticated, redirect to login
+    console.log('ProtectedRoute: User not authenticated. Redirecting to /login. Auth token:', localStorage.getItem('authToken'), 'IsAuthenticated flag:', localStorage.getItem('isAuthenticated'));
     return <Navigate to="/login" replace />;
   }
 
@@ -21,6 +22,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
       // A dedicated "Not Authorized" page would be better UX.
       // Or, if only one role is allowed, a more specific message/redirect could be used.
       console.warn(`User with role '${userRole}' tried to access a route restricted to roles: ${allowedRoles.join(', ')}`);
+      console.log('ProtectedRoute: User role check failed. User role:', userRole, 'Allowed roles:', allowedRoles, '. Redirecting to /.');
       return <Navigate to="/" replace />; 
     }
   }
