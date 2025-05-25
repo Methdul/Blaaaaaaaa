@@ -173,10 +173,7 @@ const Dashboard = () => {
                             toast({ title: "Opening Document", description: `Attempting to open ${doc.name}.` });
                           }}
                         >
-                          <span> {/* Changed from React.Fragment */}
-                            <ExternalLink className="w-4 h-4" />
-                            <span className="sr-only">Open document</span>
-                          </span> {/* Changed from React.Fragment */}
+                          Open
                         </Button>
                       </div>
                     </div>
