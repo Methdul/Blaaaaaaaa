@@ -1,4 +1,5 @@
 
+import React from 'react'; // Added React import
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -172,8 +173,10 @@ const Dashboard = () => {
                             toast({ title: "Opening Document", description: `Attempting to open ${doc.name}.` });
                           }}
                         >
-                          <ExternalLink className="w-4 h-4" />
-                          <span className="sr-only">Open document</span>
+                          <React.Fragment>
+                            <ExternalLink className="w-4 h-4" />
+                            <span className="sr-only">Open document</span>
+                          </React.Fragment>
                         </Button>
                       </div>
                     </div>

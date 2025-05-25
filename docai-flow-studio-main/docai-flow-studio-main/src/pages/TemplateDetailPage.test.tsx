@@ -1,15 +1,20 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { TooltipProvider } from '@/components/ui/tooltip'; // Adjust path if necessary
 import TemplateDetailPage from './TemplateDetailPage'; // Adjust path as necessary
 import { mockTemplates } from '@/data/mockTemplates'; // Adjust path
 import { toast } from '@/components/ui/use-toast'; // Adjust path
 
-// Mock react-router-dom
+// Create a new QueryClient instance for tests
+const queryClient = new QueryClient();
+
+// Default mock for react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
-    useParams: () => ({ templateId: 'resume-001' }), // Mock a valid templateId
+    useParams: () => ({ templateId: 'resume-001' }), // Default mock for a valid templateId
     Link: ({ children, to }: { children: React.ReactNode, to: string }) => <a href={to}>{children}</a>,
   };
 });
@@ -47,15 +52,81 @@ describe('TemplateDetailPage', () => {
     vi.clearAllMocks();
   });
 
+  describe('Basic Rendering', () => {
+    it('renders template details when a valid templateId is provided', () => {
+      // useParams is mocked to 'resume-001' by default, which is in mockTemplates
+      render(
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TemplateDetailPage />
+          </TooltipProvider>
+        </QueryClientProvider>
+      );
+      expect(screen.getByText(mockTemplates[0].name)).toBeInTheDocument();
+      expect(screen.getByText(mockTemplates[0].description)).toBeInTheDocument();
+      // Add more assertions for other details if necessary
+      expect(screen.getByText(`Created by ${mockTemplates[0].creatorName}`)).toBeInTheDocument();
+      expect(screen.getByText(`${mockTemplates[0].downloads.toLocaleString()} downloads`)).toBeInTheDocument();
+    });
+
+    it('renders "Template Not Found" when an invalid templateId is provided', async () => {
+      // Override useParams mock for this specific test
+      vi.doMock('react-router-dom', async () => {
+        const actual = await vi.importActual('react-router-dom');
+        return {
+          ...actual,
+          useParams: () => ({ templateId: 'nonexistent-id' }), // Invalid ID
+          Link: ({ children, to }: { children: React.ReactNode, to: string }) => <a href={to}>{children}</a>,
+        };
+      });
+
+      // Need to re-import the component to use the new mock
+      const TemplateDetailPageWithInvalidId = (await import('./TemplateDetailPage')).default;
+
+      render(
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TemplateDetailPageWithInvalidId />
+          </TooltipProvider>
+        </QueryClientProvider>
+      );
+      expect(screen.getByText(/Template Not Found/i)).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Back to Templates/i })).toBeInTheDocument();
+      
+      // Reset mocks to default for other tests
+      vi.doUnmock('react-router-dom');
+      vi.mock('react-router-dom', async () => {
+        const actual = await vi.importActual('react-router-dom');
+        return {
+          ...actual,
+          useParams: () => ({ templateId: 'resume-001' }),
+          Link: ({ children, to }: { children: React.ReactNode, to: string }) => <a href={to}>{children}</a>,
+        };
+      });
+    });
+  });
+
   describe('Interactive Star Rating', () => {
     it('should render 5 interactive stars', () => {
-      render(<TemplateDetailPage />);
+      render(
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TemplateDetailPage />
+          </TooltipProvider>
+        </QueryClientProvider>
+      );
       const stars = screen.getAllByLabelText(/Rate \d star(s)?/);
       expect(stars.length).toBe(5);
     });
 
     it('should update currentRating and star appearance on click', () => {
-      render(<TemplateDetailPage />);
+      render(
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TemplateDetailPage />
+          </TooltipProvider>
+        </QueryClientProvider>
+      );
       const stars = screen.getAllByLabelText(/Rate \d star(s)?/);
       
       // Click 4th star (rate 4 stars)
@@ -77,7 +148,13 @@ describe('TemplateDetailPage', () => {
     });
 
     it('should change star appearance on hover', () => {
-        render(<TemplateDetailPage />);
+        render(
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <TemplateDetailPage />
+            </TooltipProvider>
+          </QueryClientProvider>
+        );
         const stars = screen.getAllByLabelText(/Rate \d star(s)?/);
         
         // Hover over 3rd star
@@ -96,7 +173,13 @@ describe('TemplateDetailPage', () => {
 
   describe('handleSubmitReview Logic', () => {
     it('should call toast with error if rating is missing', () => {
-      render(<TemplateDetailPage />);
+      render(
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TemplateDetailPage />
+          </TooltipProvider>
+        </QueryClientProvider>
+      );
       const reviewTextarea = screen.getByPlaceholderText('Share your thoughts on this template...');
       fireEvent.change(reviewTextarea, { target: { value: 'This is a great template!' } });
       
