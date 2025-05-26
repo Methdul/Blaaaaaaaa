@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea'; // Added Textarea
+import { Label as UILabel } from '@/components/ui/label';
 import { Star, StarHalf, Download, Tag, UserCircle, ArrowLeft, AlertTriangle, MessageSquare } from 'lucide-react'; // Added MessageSquare
 import { toast } from '@/components/ui/use-toast';
 
@@ -196,7 +197,7 @@ const TemplateDetailPage: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="reviewText" className="text-sm font-medium text-foreground">Your Review:</Label>
+                    <UILabel htmlFor="reviewText" className="text-sm font-medium text-foreground">Your Review:</UILabel>
                     <Textarea 
                       id="reviewText"
                       placeholder="Share your thoughts on this template..." 
