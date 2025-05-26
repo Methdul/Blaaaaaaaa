@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, User, Settings, LogOut, UserCircle, LayoutDashboard, FileText, Info, MessageSquare, Home, Sun, Moon } from 'lucide-react'; // Added Sun, Moon
+// Removed Sun, Moon from this import as they are no longer used
+import { Menu, User, Settings, LogOut, UserCircle, LayoutDashboard, FileText, Info, MessageSquare, Home } from 'lucide-react'; 
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,22 +23,13 @@ const Navigation = () => {
   const [authStatus, setAuthStatus] = useState(isAuthenticated());
   const [userName, setUserName] = useState<string | null>(null);
   const [userIsCreator, setUserIsCreator] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme;
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  // Removed theme state variable
 
+  // useEffect to set theme to light mode permanently
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  }, []); // Empty dependency array, so it runs once on mount.
 
   useEffect(() => {
     setAuthStatus(isAuthenticated());
@@ -45,9 +37,7 @@ const Navigation = () => {
     setUserIsCreator(isCreator());
   }, [location.pathname]); // Re-check on route change
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
+  // Removed toggleTheme function
 
   const handleLogout = () => {
     logout(); // Clears localStorage and redirects via window.location
@@ -135,9 +125,6 @@ const Navigation = () => {
 
           {/* Theme Toggle & Auth Actions & User Menu (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-            </Button>
             {authStatus ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -227,16 +214,6 @@ const Navigation = () => {
                   </div>
                   
                   <div className="mt-auto border-t pt-6">
-                    {/* Mobile Theme Toggle */}
-                    <Button 
-                      variant="outline" 
-                      className="w-full mb-3 flex items-center justify-center" 
-                      onClick={() => { toggleTheme(); setIsMobileMenuOpen(false); }}
-                    >
-                      {theme === 'light' ? <Moon className="w-5 h-5 mr-2" /> : <Sun className="w-5 h-5 mr-2" />}
-                      Toggle Theme
-                    </Button>
-
                     {authStatus ? (
                        <Button
                         variant="outline"
