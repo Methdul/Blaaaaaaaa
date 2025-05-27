@@ -17,6 +17,12 @@ const becomeCreatorSchema = z.object({
   fullName: z.string().min(1, { message: "Full name is required." }),
   email: z.string().email({ message: "Invalid email address." }),
   portfolioLink: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
+  experienceYears: z.preprocess(
+    (val) => Number(String(val).trim() === "" ? undefined : val), // Ensure empty string becomes undefined for zod number coercion
+    z.number({ required_error: "Years of experience is required." }).positive({ message: "Years must be a positive number." })
+  ),
+  primarySpecialization: z.string().min(3, { message: "Specialization must be at least 3 characters." }),
+  preferredTools: z.string().min(3, { message: "Tools description must be at least 3 characters." }),
   reason: z.string()
     .min(50, { message: "Reason must be at least 50 characters." })
     .max(500, { message: "Reason cannot exceed 500 characters." }),
@@ -35,6 +41,9 @@ const BecomeCreatorPage: React.FC = () => {
       fullName: '',
       email: '',
       portfolioLink: '',
+      experienceYears: undefined, // Or 0, but undefined might be better for placeholder visibility
+      primarySpecialization: '',
+      preferredTools: '',
       reason: '',
     }
   });
@@ -43,10 +52,15 @@ const BecomeCreatorPage: React.FC = () => {
     if (isCreator()) {
       setIsAlreadyCreator(true);
     } else {
-      const name = getUserName();
-      const email = getUserEmail();
-      if (name) setValue('fullName', name, { shouldValidate: true });
-      if (email) setValue('email', email, { shouldValidate: true });
+      const savedStatus = localStorage.getItem('creatorApplicationStatus');
+      if (savedStatus === 'pending') {
+        setApplicationSubmitted(true);
+      } else {
+        const name = getUserName();
+        const email = getUserEmail();
+        if (name) setValue('fullName', name, { shouldValidate: true });
+        if (email) setValue('email', email, { shouldValidate: true });
+      }
     }
   }, [setValue]);
 
@@ -58,6 +72,7 @@ const BecomeCreatorPage: React.FC = () => {
       duration: 5000,
     });
     setApplicationSubmitted(true);
+    localStorage.setItem('creatorApplicationStatus', 'pending');
     // Optionally, redirect after a delay:
     // setTimeout(() => navigate('/dashboard'), 5000);
   };
@@ -151,6 +166,21 @@ const BecomeCreatorPage: React.FC = () => {
                     <Label htmlFor="portfolioLink" className="font-medium">Portfolio/Website Link (Optional)</Label>
                     <Input id="portfolioLink" placeholder="https://yourportfolio.com" {...register("portfolioLink")} className="mt-1 bg-background/50" />
                     {errors.portfolioLink && <p className="text-sm text-destructive mt-1">{errors.portfolioLink.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="experienceYears" className="font-medium">Years of Relevant Experience</Label>
+                    <Input id="experienceYears" type="number" {...register("experienceYears")} className="mt-1 bg-background/50" placeholder="e.g., 3" />
+                    {errors.experienceYears && <p className="text-sm text-destructive mt-1">{errors.experienceYears.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="primarySpecialization" className="font-medium">Primary Template Specialization(s)</Label>
+                    <Input id="primarySpecialization" type="text" placeholder="e.g., Resumes, Business Proposals, Educational Materials" {...register("primarySpecialization")} className="mt-1 bg-background/50" />
+                    {errors.primarySpecialization && <p className="text-sm text-destructive mt-1">{errors.primarySpecialization.message}</p>}
+                  </div>
+                  <div>
+                    <Label htmlFor="preferredTools" className="font-medium">Preferred Design/Content Creation Tools</Label>
+                    <Input id="preferredTools" type="text" placeholder="e.g., Figma, Canva, Google Docs, MS Word" {...register("preferredTools")} className="mt-1 bg-background/50" />
+                    {errors.preferredTools && <p className="text-sm text-destructive mt-1">{errors.preferredTools.message}</p>}
                   </div>
                   <div>
                     <Label htmlFor="reason" className="font-medium">Tell Us About Yourself & Your Templates</Label>
