@@ -1,17 +1,34 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // useEffect is already here
+import { useLocation } from 'react-router-dom'; // Added useLocation
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Zap, Copy, Download, RefreshCw } from 'lucide-react';
+// import { toast } from '@/components/ui/use-toast'; // Import if/when toast for template load is used
 
 const AiWriter = () => {
+  const location = useLocation();
+  const templateState = location.state as { templateId?: string; templateName?: string; templateDescription?: string } | null;
+
   const [prompt, setPrompt] = useState('');
   const [documentType, setDocumentType] = useState('');
   const [generatedContent, setGeneratedContent] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+
+  useEffect(() => {
+    if (templateState?.templateName) {
+      setPrompt(prevPrompt => 
+        `Using template: "${templateState.templateName}"\n\n${prevPrompt || 'Please describe what you want to write based on this template...'}`
+      );
+      
+      // Optional: Set documentType or show toast (not implemented in this step)
+      // console.log('Loaded with template:', templateState.templateName);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateState]); // Run when templateState changes (added eslint-disable for prompt in deps as per original thinking)
+
 
   const documentTypes = [
     { value: 'cover-letter', label: 'Cover Letter' },

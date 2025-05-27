@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { mockTemplates } from '@/data/mockTemplates';
 import { Template } from '@/types/template';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,7 @@ import { toast } from '@/components/ui/use-toast';
 
 const TemplateDetailPage: React.FC = () => {
   const { templateId } = useParams<{ templateId: string }>();
+  const navigate = useNavigate(); // Initialize useNavigate
   // Initialize template data in state to make it mutable
   const [displayedTemplate, setDisplayedTemplate] = useState<Template | undefined>(
     () => mockTemplates.find(t => t.id === templateId)
@@ -61,18 +62,22 @@ const TemplateDetailPage: React.FC = () => {
     ));
   }
 
-  const handleDownload = () => {
+  const handleTryTemplate = () => {
     if (displayedTemplate) {
-      const updatedTemplate = {
-        ...displayedTemplate,
-        downloads: displayedTemplate.downloads + 1,
-      };
-      setDisplayedTemplate(updatedTemplate); // Update local state
-
-      console.log(`Downloading template: ${updatedTemplate.name} (ID: ${updatedTemplate.id})`);
+      navigate('/ai-writer', { 
+        state: { 
+          templateId: displayedTemplate.id, 
+          templateName: displayedTemplate.name,
+          // Optionally, pass more template data if readily available and useful for AiWriter
+          // For example: templateDescription: displayedTemplate.description 
+        } 
+      });
+    } else {
+      // Fallback if template data is somehow not available (should not happen if button is visible)
       toast({
-        title: "Download Started!",
-        description: `${updatedTemplate.name} is now downloading. Total downloads: ${updatedTemplate.downloads.toLocaleString()}.`,
+        title: "Error",
+        description: "Template data not available to try.",
+        variant: "destructive",
       });
     }
   };
@@ -225,8 +230,8 @@ const TemplateDetailPage: React.FC = () => {
               {/* End of Review Submission Section */}
 
               <div className="mt-auto pt-6"> {/* Pushes download button to bottom */}
-                <Button size="lg" className="w-full text-lg py-3 bg-primary hover:bg-primary/90" onClick={handleDownload}>
-                  <Download className="mr-2 h-5 w-5" /> Download Template
+                <Button size="lg" className="w-full text-lg py-3 bg-primary hover:bg-primary/90" onClick={handleTryTemplate}>
+                  <Download className="mr-2 h-5 w-5" /> Try Template
                 </Button>
               </div>
             </div>
